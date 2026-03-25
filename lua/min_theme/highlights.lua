@@ -9,6 +9,7 @@ end
 
 function M.build(c, opts)
   local transparent = opts.transparent
+  local default_fg = c.fg_default or c.fg
   local normal_bg = bg_or_none(c.bg, transparent)
   local float_bg = bg_or_none(c.bg_float, transparent)
   local popup_bg = bg_or_none(c.bg_popup, transparent)
@@ -17,9 +18,9 @@ function M.build(c, opts)
   local alt_bg = bg_or_none(c.bg_alt, transparent)
 
   return {
-    Normal = { fg = c.fg, bg = normal_bg },
-    NormalNC = { fg = c.fg, bg = normal_bg },
-    NormalFloat = { fg = c.fg, bg = float_bg },
+    Normal = { fg = default_fg, bg = normal_bg },
+    NormalNC = { fg = default_fg, bg = normal_bg },
+    NormalFloat = { fg = default_fg, bg = float_bg },
     FloatBorder = { fg = c.border, bg = float_bg },
     FloatTitle = { fg = c.accent, bg = float_bg, bold = true },
     ColorColumn = { bg = c.bg_subtle },
@@ -43,7 +44,7 @@ function M.build(c, opts)
     PmenuSbar = { bg = c.bg_subtle },
     PmenuThumb = { bg = c.border },
     Visual = { bg = c.bg_visual },
-    Search = { fg = c.bg, bg = c.constant },
+    Search = { fg = c.fg, bg = c.bg_search },
     CurSearch = { fg = c.bg, bg = c.accent, bold = true },
     IncSearch = { fg = c.bg, bg = c.accent, bold = true },
     MatchParen = { fg = c.accent, bg = c.bg_cursorline, bold = true },
@@ -68,7 +69,7 @@ function M.build(c, opts)
     Number = { fg = c.number },
     Boolean = { fg = c.constant },
     Float = { fg = c.number },
-    Identifier = { fg = c.constant },
+    Identifier = { fg = c.fg_syntax },
     Function = { fg = c.func },
     Statement = { fg = c.keyword },
     Conditional = { fg = c.keyword },
@@ -157,6 +158,7 @@ function M.build(c, opts)
     ["@keyword.return"] = { fg = c.keyword },
     ["@keyword.type"] = { fg = c.keyword },
     ["@label"] = { fg = c.heading },
+    ["@markup"] = { fg = default_fg },
     ["@markup.heading"] = { fg = c.heading, bold = true },
     ["@markup.heading.1"] = { fg = c.heading, bold = true },
     ["@markup.heading.2"] = { fg = c.heading, bold = true },
@@ -201,7 +203,7 @@ function M.build(c, opts)
     ["@type"] = { fg = c.type },
     ["@type.builtin"] = { fg = c.type },
     ["@type.definition"] = { fg = c.type },
-    ["@variable"] = { fg = c.fg },
+    ["@variable"] = { fg = c.fg_syntax },
     ["@variable.builtin"] = { fg = c.constant },
     ["@variable.member"] = { fg = c.constant },
     ["@variable.parameter"] = { fg = c.parameter },
@@ -276,6 +278,7 @@ function M.build(c, opts)
     TSURI = { link = "@markup.link.url" },
     TSVariable = { link = "@variable" },
     TSVariableBuiltin = { link = "@variable.builtin" },
+    markdownText = { fg = default_fg },
     markdownBold = { fg = c.heading, bold = true },
     markdownItalic = { italic = true },
     markdownH1 = { fg = c.heading, bold = true },
