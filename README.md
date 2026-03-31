@@ -36,9 +36,23 @@ Optional configuration:
 ```lua
 require("min_theme").setup({
   style = "min", -- "min" | "min-dark" | "min-light"
-  transparent = false,
 })
 ```
+
+## Plugin Support
+
+Common groups are themed for:
+
+- `copilot.vim` (`CopilotSuggestion`)
+- LSP / diagnostics (`Lsp*`, `Diagnostic*`)
+- `blink.cmp` (`BlinkCmp*`)
+- `snacks.nvim` (`SnacksPicker*`, `SnacksInput*`, `SnacksNotifier*`, `SnacksIndent*`, `SnacksDashboard*`)
+- `nvim-cmp`
+- `telescope.nvim` (legacy compatibility)
+- `nvim-tree.lua` / `neo-tree.nvim`
+- `which-key.nvim`
+- `trouble.nvim`
+- `ibl` / `indent-blankline.nvim`
 
 ## License
 

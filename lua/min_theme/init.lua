@@ -5,35 +5,27 @@ local M = {}
 
 local config = {
   style = "min",
-  transparent = false,
-}
-
-local aliases = {
-  dark = "min-dark",
-  light = "min-light",
-  auto = "min",
-  default = "min",
-  min = "min",
-  min_dark = "min-dark",
-  min_light = "min-light",
 }
 
 local function normalize_style(style)
   if not style or style == "" then
     return config.style
   end
-  return aliases[style] or style
+  return style
+end
+
+local function is_valid_style(style)
+  return style == "min" or style == "min-dark" or style == "min-light"
 end
 
 local function resolve_style(style)
-  local normalized = normalize_style(style)
-  if normalized == "min" then
+  if style == "min" then
     if vim.o.background == "light" then
       return "min-light"
     end
     return "min-dark"
   end
-  return normalized
+  return style
 end
 
 local function apply(groups)
@@ -47,9 +39,13 @@ function M.setup(opts)
 end
 
 function M.load(style)
-  local requested = style or vim.g.min_theme_style
-  local normalized = normalize_style(requested)
-  local selected = resolve_style(requested)
+  local normalized = normalize_style(style or vim.g.min_theme_style)
+  if not is_valid_style(normalized) then
+    vim.notify(("min-theme.nvim: unknown style '%s', fallback to min-dark"):format(normalized), vim.log.levels.WARN)
+    normalized = "min-dark"
+  end
+
+  local selected = resolve_style(normalized)
   local colors = palette[selected]
   if not colors then
     vim.notify(("min-theme.nvim: unknown style '%s', fallback to min-dark"):format(selected), vim.log.levels.WARN)
@@ -68,7 +64,7 @@ function M.load(style)
   vim.o.termguicolors = true
   vim.o.background = colors.background
   vim.g.colors_name = normalized == "min" and "min" or selected
-  apply(highlights.build(colors, config))
+  apply(highlights.build(colors))
 end
 
 return M
