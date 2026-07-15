@@ -45,6 +45,7 @@ Common groups are themed for:
 
 - `copilot.vim` (`CopilotSuggestion`)
 - LSP / diagnostics (`Lsp*`, `Diagnostic*`)
+- `coc.nvim` (`CocFloat*`, `CocPum*`)
 - `blink.cmp` (`BlinkCmp*`)
 - `snacks.nvim` (`SnacksPicker*`, `SnacksInput*`, `SnacksNotifier*`, `SnacksIndent*`, `SnacksDashboard*`)
 - `nvim-cmp`
